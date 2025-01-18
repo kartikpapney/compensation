@@ -1,0 +1,5 @@
+**/data.csv
+**/data.json
+**/node_modules
+**/.env
+**/.next
