@@ -180,7 +180,7 @@ export default function EnhancedTable({
                   >
                     <CustomTableCell
                       text={row.company}
-                      labels={[row.location, row.date]}
+                      labels={[row.location, row.date, row.ctc]}
                       link={row.link}
                     >
                       {' '}
@@ -211,7 +211,7 @@ export default function EnhancedTable({
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 15]}
+          rowsPerPageOptions={[5, 10, 15, 1000]}
           component="div"
           count={total}
           rowsPerPage={rowsPerPage}

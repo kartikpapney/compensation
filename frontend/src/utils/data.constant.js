@@ -5,7 +5,7 @@ export const columns = [
         disablePadding: false,
         text: ["Company"],
         sortBy: "createdAt",
-        label: ["City", "Date"],
+        label: ["City", "Date", "Total"],
     },
     {
         id: "role",
