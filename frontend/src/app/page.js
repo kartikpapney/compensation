@@ -7,8 +7,6 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {columns, yoeSliderMarks, ctcSliderMarks} from "../utils/data.constant"
 export default function Home() {
-    
-
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -55,7 +53,9 @@ export default function Home() {
                 const response = await fetch(
                     `/api?skip=${page * rowsPerPage}&limit=${rowsPerPage}&sortBy=${orderBy}&sort=${
                         order === "asc" ? 1 : -1
-                    }&minCtc=${minCtc}&minYoe=${minYoe}&maxYoe=${maxYoe}&_company=${selectedCompanies.map((e)=>e._id).join(",")}&_location=${selectedLocations.map((e)=>e._id).join(",")}`
+                    }&minCtc=${minCtc}&minYoe=${minYoe}&maxYoe=${maxYoe}&_company=${selectedCompanies
+                        .map((e) => e._id)
+                        .join(",")}&_location=${selectedLocations.map((e) => e._id).join(",")}`
                 );
                 const data = await response.json();
                 const rowsData = data.data.data.map((offer) => {
@@ -87,7 +87,6 @@ export default function Home() {
     }, [page, rowsPerPage, order, orderBy, minCtc, minYoe, maxYoe, selectedCompanies, selectedLocations]);
 
     useEffect(() => {
-
         async function getLocation() {
             const locationData = await (await fetch("/api/location")).json();
             setLocation(locationData.data.data);
@@ -97,16 +96,15 @@ export default function Home() {
             setCompany(companyData.data.data);
         }
         async function getManifest() {
-            const {data} = await (await fetch("/api/manifest")).json();
-            setYoeRange([data.minYoe, data.maxYoe])
-            setCtcRange([data.minTotalCompensation, data.maxTotalCompensation])
+            const { data } = await (await fetch("/api/manifest")).json();
+            setYoeRange([data.minYoe, data.maxYoe]);
+            setCtcRange([data.minTotalCompensation, data.maxTotalCompensation]);
         }
 
-        getLocation()
-        getCompany()
-        getManifest()
+        getLocation();
+        getCompany();
+        getManifest();
     }, []);
-
 
     return (
         <CenteredLayout>
@@ -119,12 +117,10 @@ export default function Home() {
                 onChange={(event, value) => {
                     setSelectedLocations(value);
                 }}
-                renderInput={(params) => (
-                    <TextField {...params} label="Location" placeholder="Select location" />
-                )}
+                renderInput={(params) => <TextField {...params} label="Location" placeholder="Select location" />}
             />
             <Autocomplete
-                style={{ marginTop: '10px', marginBottom: '10px' }}
+                style={{ marginTop: "10px", marginBottom: "10px" }}
                 multiple
                 id="tags-outlined-companies"
                 options={company}
@@ -133,9 +129,7 @@ export default function Home() {
                 onChange={(event, value) => {
                     setSelectedCompanies(value);
                 }}
-                renderInput={(params) => (
-                    <TextField {...params} label="Company" placeholder="Select company" />
-                )}
+                renderInput={(params) => <TextField {...params} label="Company" placeholder="Select company" />}
             />
             <Slider
                 marks={ctcSliderMarks}
