@@ -10,7 +10,7 @@ module.exports = {
         leetcodeScrapper().then(() => leetcodeParser().then(() => console.log("---- parsed ----")))
       } else {
         cron.schedule(SCRAP_TIMING, async () => {
-          await leetcodeScrapper();
+          await leetcodeScrapper().then(() => leetcodeParser().then(() => console.log("---- parsed ----")))
         });
         console.log('cron scheduled');
       }
