@@ -68,16 +68,16 @@ export default function Home() {
                 const rowsData = data.data.data.map((offer) => {
                     return {
                         id: offer._id,
-                        company: offer._company.name,
-                        location: offer._location.name || "N/A",
+                        company: offer._company.name.substring(0, 20),
+                        location: offer._location.name.substring(0, 12) || "N/A",
                         date: new Date(offer.createdAt * 1000).toLocaleDateString(),
-                        role: offer.offeredRole,
-                        offeredRole: offer.offeredRole,
+                        role: offer.offeredRole || "N/A",
+                        offeredRole: offer.offeredRole.substring(0, 40) || "N/A",
                         yoe: offer.yoe == -1 ? "N/A" : offer.yoe,
                         ctc: offer.ctc == -1 ? "N/A" : offer.ctc,
                         base: offer.base == -1 ? "N/A" : offer.base,
                         hike:
-                            offer.prevCtc == -1 || offer.ctc == -1
+                            offer.prevCtc <=0  || offer.ctc <=0
                                 ? "N/A"
                                 : `${Math.round(((offer.ctc - offer.prevCtc) / offer.prevCtc) * 100)}%`,
                         link: offer.link,
@@ -89,7 +89,7 @@ export default function Home() {
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
-        }, 500);
+        }, 300);
         
        
         return () => {
@@ -99,6 +99,7 @@ export default function Home() {
         };
     }, [page, rowsPerPage, order, orderBy, minCtc, minYoe, maxYoe, selectedCompanies, selectedLocations]);
     
+    useEffect(() => {setPage(0)}, [rowsPerPage, order, orderBy, minCtc, minYoe, maxYoe, selectedCompanies, selectedLocations]);
     useEffect(() => {
         async function getLocation() {
             const locationData = await (await fetch("/api/location")).json();
@@ -145,6 +146,21 @@ export default function Home() {
                 }}
                 renderInput={(params) => <TextField {...params} label="Company" placeholder="Select company" />}
             />
+            <SortableTable
+                total={total}
+                columns={columns}
+                rows={rows}
+                tableName="Compensation"
+                order={order}
+                orderBy={orderBy}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                setOrderBy={setOrderBy}
+                setOrder={setOrder}
+                setPage={setPage}
+                setRowsPerPage={setRowsPerPage}
+            />
+            
             <Slider
                 marks={ctcSliderMarks}
                 size="small"

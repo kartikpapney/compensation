@@ -18,7 +18,7 @@ const limiter = rateLimit({
 const app = express();
 
 app.use(bodyParser.json());
-// app.use(limiter)
+app.use(limiter)
 
 app.use('/api', router);
 
