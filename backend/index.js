@@ -20,7 +20,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(limiter)
 
-app.use('/api', router);
+app.use('/compensation/api', router);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'No route found' });
