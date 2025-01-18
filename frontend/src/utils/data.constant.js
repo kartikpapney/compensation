@@ -38,16 +38,16 @@ export const columns = [
 export const ctcSliderMarks = [
     { value: -1, label: "N/A" },
     {
-        value: 10,
-        label: "10 LPA",
+        value: 25,
+        label: "25 LPA",
     },
     {
-        value: 40,
-        label: "40 LPA",
+        value: 77,
+        label: "50 LPA",
     },
     {
-        value: 100,
-        label: "100 LPA",
+        value: 150,
+        label: "1.5 Cr",
     },
 ];
 export const yoeSliderMarks = [

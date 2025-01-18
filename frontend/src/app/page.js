@@ -3,13 +3,15 @@
 import CenteredLayout from "@/components/CenteredLayout";
 import SortableTable from "@/components/SortableTable";
 import { Autocomplete, Slider, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {columns, yoeSliderMarks, ctcSliderMarks} from "../utils/data.constant"
+import BuyMeACoffee from "@/components/BuyMeACoffee";
+
 export default function Home() {
     const router = useRouter();
     const searchParams = useSearchParams();
-
+    const fetchDataDebounced = useRef(null);
     const [minYoe, setMinYoe] = useState(() => Number(searchParams.get("minYoe")) || -1);
     const [maxYoe, setMaxYoe] = useState(() =>
         searchParams.get("maxYoe") === "Infinity" ? Infinity : Number(searchParams.get("maxYoe")) || Infinity
@@ -48,7 +50,12 @@ export default function Home() {
     };
 
     useEffect(() => {
-        async function fetchData() {
+        
+        if (fetchDataDebounced.current) {
+            clearTimeout(fetchDataDebounced.current);
+        }
+    
+        fetchDataDebounced.current = setTimeout(async () => {
             try {
                 const response = await fetch(
                     `/api?skip=${page * rowsPerPage}&limit=${rowsPerPage}&sortBy=${orderBy}&sort=${
@@ -78,14 +85,20 @@ export default function Home() {
                 });
                 setTotal(data.data.total);
                 setRows([...rowsData]);
+                updateInUrl(); 
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
-        }
-        updateInUrl();
-        fetchData();
+        }, 500);
+        
+       
+        return () => {
+            if (fetchDataDebounced.current) {
+                clearTimeout(fetchDataDebounced.current);
+            }
+        };
     }, [page, rowsPerPage, order, orderBy, minCtc, minYoe, maxYoe, selectedCompanies, selectedLocations]);
-
+    
     useEffect(() => {
         async function getLocation() {
             const locationData = await (await fetch("/api/location")).json();
@@ -108,6 +121,7 @@ export default function Home() {
 
     return (
         <CenteredLayout>
+            {/* <BuyMeACoffee/> */}
             <Autocomplete
                 multiple
                 id="tags-outlined-locations"

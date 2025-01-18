@@ -5,7 +5,6 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 
 function CustomTableCell({ text, link, labels = [], align = 'left' }) {
-  console.log(link);
   return (
     <TableCell align={align}>
       {link ? (

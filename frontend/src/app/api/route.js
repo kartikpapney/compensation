@@ -13,7 +13,6 @@ export async function GET(request) {
     const _company = queryParams.get('_company') ?? []
     const _location = queryParams.get('_location') ?? []
 
-    console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api?limit=${limit}&skip=${skip}&sort=${sort}&sortBy=${sortBy}&minCtc=${minCtc}&minYoe=${minYoe}&maxYoe=${maxYoe}&_company=${_company}&_location=${_location}`,
     );
