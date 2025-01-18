@@ -145,22 +145,7 @@ export default function Home() {
                     setSelectedCompanies(value);
                 }}
                 renderInput={(params) => <TextField {...params} label="Company" placeholder="Select company" />}
-            />
-            <SortableTable
-                total={total}
-                columns={columns}
-                rows={rows}
-                tableName="Compensation"
-                order={order}
-                orderBy={orderBy}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                setOrderBy={setOrderBy}
-                setOrder={setOrder}
-                setPage={setPage}
-                setRowsPerPage={setRowsPerPage}
-            />
-            
+            />   
             <Slider
                 marks={ctcSliderMarks}
                 size="small"
