@@ -7,13 +7,12 @@ import Link from "next/link";
 
 const SocialLinks = () => {
     return (
-        <Box display="flex" alignItems="center" justifyContent="center" gap={1} p={1} bgcolor="background.paper" borderRadius={2}>
+        <Box display="flex" alignItems="center" justifyContent="center" bgcolor="background.paper" borderRadius={2}>
             <Typography variant="secondary" component="p" color="text.primary">
                 Developed by{" "}
                 <Link href="https://kartikpapney.xyz" target="_blank" rel="noopener noreferrer">
                     Kartik Papney
                 </Link>
-                :
             </Typography>
             <Tooltip title="GitHub">
                 <IconButton href="https://github.com/kartikpapney/compensation" target="_blank" rel="noopener noreferrer" color="primary">

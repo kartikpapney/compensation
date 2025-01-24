@@ -10,6 +10,7 @@ import SocialLinks from "@/components/SocialLinks";
 import useMobileWidth from "@/hooks/useMobileWidth";
 
 export default function Home() {
+
     const router = useRouter();
     const searchParams = useSearchParams();
     const fetchDataDebounced = useRef(null);
@@ -131,6 +132,7 @@ export default function Home() {
             setVisibleColumns(columns);
         }
     }, [isMobile])
+    
     return (
         <CenteredLayout>
             <Autocomplete
@@ -160,45 +162,47 @@ export default function Home() {
                 }}
                 renderInput={(params) => <TextField {...params} label="Company" placeholder="Select company" />}
             />   
-            <Slider
-                marks={ctcSliderMarks}
-                size="small"
-                defaultValue={ctcRange[0]}
-                value={minCtc}
-                min={ctcRange[0]}
-                max={ctcRange[1]}
-                aria-label="Small"
-                valueLabelDisplay="auto"
-                onChange={(e) => {
-                    setMinCtc(e.target.value);
-                }}
-                valueLabelFormat={(value) => {
-                    if (value === -1) {
-                        return "N/A";
-                    }
-                    return value;
-                }}
-            />
-            <Slider
-                marks={yoeSliderMarks}
-                size="small"
-                getAriaLabel={() => "YOE range"}
-                value={[minYoe, maxYoe]}
-                min={yoeRange[0]}
-                max={yoeRange[1]}
-                aria-label="Small"
-                valueLabelDisplay="auto"
-                onChange={(e) => {
-                    setMinYoe(e.target.value[0]);
-                    setMaxYoe(e.target.value[1]);
-                }}
-                valueLabelFormat={(value) => {
-                    if (value === -1) {
-                        return "N/A";
-                    }
-                    return value;
-                }}
-            />
+            <div style={{paddingLeft: "5px", paddingRight: "5px", marginBottom: "8px", marginTop: "8px"}}>
+                <Slider
+                    marks={ctcSliderMarks}
+                    size="small"
+                    defaultValue={ctcRange[0]}
+                    value={minCtc}
+                    min={ctcRange[0]}
+                    max={ctcRange[1]}
+                    aria-label="Small"
+                    valueLabelDisplay="auto"
+                    onChange={(e) => {
+                        setMinCtc(e.target.value);
+                    }}
+                    valueLabelFormat={(value) => {
+                        if (value === -1) {
+                            return "N/A";
+                        }
+                        return value;
+                    }}
+                />
+                <Slider
+                    marks={yoeSliderMarks}
+                    size="small"
+                    getAriaLabel={() => "YOE range"}
+                    value={[minYoe, maxYoe]}
+                    min={yoeRange[0]}
+                    max={yoeRange[1]}
+                    aria-label="Small"
+                    valueLabelDisplay="auto"
+                    onChange={(e) => {
+                        setMinYoe(e.target.value[0]);
+                        setMaxYoe(e.target.value[1]);
+                    }}
+                    valueLabelFormat={(value) => {
+                        if (value === -1) {
+                            return "N/A";
+                        }
+                        return value;
+                    }}
+                />
+            </div>
             <SortableTable
                 isMobile={isMobile}
                 total={total}
