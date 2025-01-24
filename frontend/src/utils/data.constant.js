@@ -5,13 +5,29 @@ export const columns = [
         disablePadding: false,
         text: ["Company"],
         sortBy: "createdAt",
-        label: ["City", "Date", "Total"],
+        label: [
+            {
+                id: "location",
+                text: "City",
+            },
+            {
+                id: "date",
+                text: "Date",
+            },
+        ],
+        mobile: true,
+        align: "left",
+        link: true,
     },
     {
         id: "role",
         numeric: false,
         disablePadding: false,
+        label: [],
         text: ["Role"],
+        mobile: false,
+        align: "right",
+        link: false,
     },
     {
         id: "yoe",
@@ -19,20 +35,36 @@ export const columns = [
         disablePadding: false,
         text: ["Yoe"],
         sortBy: "yoe",
+        mobile: false,
+        label: [],
+        align: "right",
+        link: false,
     },
     {
         id: "ctc",
         numeric: true,
         disablePadding: false,
         text: ["Total"],
-        label: ["Base"],
+        label: [
+            {
+                id: "base",
+                text: "Base",
+            },
+        ],
         sortBy: "ctc",
+        mobile: true,
+        align: "right",
+        link: false,
     },
     {
         id: "hike",
         numeric: false,
         disablePadding: false,
         text: ["Hike"],
+        mobile: false,
+        label: [],
+        align: "right",
+        link: false,
     },
 ];
 export const ctcSliderMarks = [

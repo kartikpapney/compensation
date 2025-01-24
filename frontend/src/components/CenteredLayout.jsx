@@ -1,10 +1,22 @@
 'use client';
 
+import { Box, Container } from '@mui/material';
+
 const CenteredLayout = ({ children }) => {
   return (
-    <div className="min-h-screen flex justify-center">
-      <div className="w-full max-w-4xl p-6">{children}</div>
-    </div>
+    <Box 
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'background.default', 
+        padding: 2, 
+      }}
+    >
+      <Container maxWidth="md" sx={{ padding: 2 }}>
+        {children}
+      </Container>
+    </Box>
   );
 };
 

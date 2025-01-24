@@ -6,7 +6,8 @@ import { Autocomplete, Slider, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {columns, yoeSliderMarks, ctcSliderMarks} from "../utils/data.constant"
-import BuyMeACoffee from "@/components/BuyMeACoffee";
+import SocialLinks from "@/components/SocialLinks";
+import useMobileWidth from "@/hooks/useMobileWidth";
 
 export default function Home() {
     const router = useRouter();
@@ -30,6 +31,9 @@ export default function Home() {
     const [selectedLocations, setSelectedLocations] = useState([]);
     const [ctcRange, setCtcRange] = useState([]);
     const [yoeRange, setYoeRange] = useState([]);
+    const [visibleColumns, setVisibleColumns] = useState(columns);
+
+    const isMobile = useMobileWidth();
 
     const updateInUrl = () => {
         const query = {
@@ -120,9 +124,15 @@ export default function Home() {
         getManifest();
     }, []);
 
+    useEffect(() => {
+        if(isMobile) {
+            setVisibleColumns(columns.filter((column) => column.mobile));
+        } else {
+            setVisibleColumns(columns);
+        }
+    }, [isMobile])
     return (
         <CenteredLayout>
-            {/* <BuyMeACoffee/> */}
             <Autocomplete
                 multiple
                 id="tags-outlined-locations"
@@ -135,7 +145,11 @@ export default function Home() {
                 renderInput={(params) => <TextField {...params} label="Location" placeholder="Select location" />}
             />
             <Autocomplete
-                style={{ marginTop: "10px", marginBottom: "10px" }}
+                sx={{
+                    marginTop: "5px",
+                    marginBottom: "5px",
+                   
+                  }}
                 multiple
                 id="tags-outlined-companies"
                 options={company}
@@ -186,10 +200,10 @@ export default function Home() {
                 }}
             />
             <SortableTable
+                isMobile={isMobile}
                 total={total}
-                columns={columns}
+                columns={visibleColumns}
                 rows={rows}
-                tableName="Compensation"
                 order={order}
                 orderBy={orderBy}
                 page={page}
@@ -199,6 +213,7 @@ export default function Home() {
                 setPage={setPage}
                 setRowsPerPage={setRowsPerPage}
             />
+            <SocialLinks/>
         </CenteredLayout>
     );
 }
