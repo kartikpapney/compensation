@@ -162,7 +162,7 @@ export default function Home() {
                 }}
                 renderInput={(params) => <TextField {...params} label="Company" placeholder="Select company" />}
             />   
-            <div style={{paddingLeft: "5px", paddingRight: "5px", marginBottom: "8px", marginTop: "8px"}}>
+            <div style={{paddingLeft: "12px", paddingRight: "12px", marginBottom: "8px", marginTop: "8px"}}>
                 <Slider
                     marks={ctcSliderMarks}
                     size="small"

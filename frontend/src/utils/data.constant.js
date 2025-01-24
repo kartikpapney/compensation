@@ -44,11 +44,11 @@ export const columns = [
         id: "ctc",
         numeric: true,
         disablePadding: false,
-        text: ["Total"],
+        text: ["Total (LPA)"],
         label: [
             {
                 id: "base",
-                text: "Base",
+                text: "Base (LPA)",
             },
         ],
         sortBy: "ctc",
@@ -86,15 +86,15 @@ export const yoeSliderMarks = [
     { value: -1, label: "N/A" },
     {
         value: 2,
-        label: "2 YOE",
+        label: "2 yrs",
     },
     {
         value: 5,
-        label: "5 YOE",
+        label: "5 yrs",
     },
     {
         value: 15,
-        label: "15 YOE",
+        label: "15 yrs",
     },
     { value: 20, label: "N/A" },
 ];

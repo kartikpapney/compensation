@@ -193,6 +193,7 @@ export default function EnhancedTable({
                     </Table>
                 </TableContainer>
                 <TablePagination
+                    sx={{ backgroundColor: "grey.100" }}
                     rowsPerPageOptions={[5, 10, 20]}
                     component="div"
                     count={total}
