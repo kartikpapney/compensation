@@ -25,7 +25,7 @@ function EnhancedTableHead(props) {
     };
 
     return (
-        <TableHead sx={{ backgroundColor: "grey.300" }}>
+        <TableHead sx={{ backgroundColor: "grey.100" }}>
             <TableRow>
                 {columns.map(({ sortBy, disablePadding, text, label }, idx) =>
                     sortBy ? (
@@ -193,7 +193,7 @@ export default function EnhancedTable({
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 15, 1000]}
+                    rowsPerPageOptions={[5, 10, 20]}
                     component="div"
                     count={total}
                     rowsPerPage={rowsPerPage}
