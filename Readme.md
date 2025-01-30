@@ -4,6 +4,7 @@ The Compensation project is a platform designed specifically for Software Engine
 <p style="margin-top: 20px; margin-bottom: 20px;">
   <img src="compensation.gif" alt="Demo">
 </p>
+
 # Key Features:
 
 <ul>
