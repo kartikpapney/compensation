@@ -3,7 +3,6 @@
 The Compensation project is a platform designed specifically for Software Engineers to visualize and analyze data from the Leetcode Compensation section. It leverages the capabilities of OpenAI's GPT-4-mini model, the platform parses user-submitted posts and extracts actionable insights, making it easier for engineers to explore salary trends, compensation packages, and market data.
 <p style="margin-top: 20px; margin-bottom: 20px;">
   <img src="compensation.gif" alt="Demo">
-   <i>The above diagram illustrates a demo of the Compensation platform.</i>
 </p>
 # Key Features:
 
@@ -21,6 +20,4 @@ The Compensation project is a platform designed specifically for Software Engine
 
 <p style="margin-top: 20px; margin-bottom: 20px;">
   <img src="hld.png" alt="High Level Design">
-    <i>The above diagram illustrates the architecture and flow of the Compensation platform.</i>
-
 </p>
