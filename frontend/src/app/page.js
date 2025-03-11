@@ -163,6 +163,7 @@ export default function Home() {
                 renderInput={(params) => <TextField {...params} label="Company" placeholder="Select company" />}
             />   
             <div style={{paddingLeft: "12px", paddingRight: "12px", marginBottom: "8px", marginTop: "8px"}}>
+                <p>Leetcode has updated the endpoints. The updated posts will be rendered soon</p>
                 <Slider
                     marks={ctcSliderMarks}
                     size="small"
