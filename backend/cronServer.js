@@ -7,7 +7,7 @@ module.exports = {
   schedule: async function () {
     try {
       if (ENV === 'local') {
-        // leetcodeScrapper().then(() => leetcodeParser().then(() => console.log("---- parsed ----")))
+        leetcodeScrapper().then(() => leetcodeParser().then(() => console.log("---- parsed ----")))
       } else {
         cron.schedule(SCRAP_TIMING, async () => {
           await leetcodeScrapper().then(() => leetcodeParser().then(() => console.log("---- parsed ----")))

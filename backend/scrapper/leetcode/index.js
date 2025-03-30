@@ -12,27 +12,36 @@ const headers = {
 const setPostId = async function (flag = 'recent') {
   function query() {
     return {
-      query: `query fetchCategoryTopics($categories: [String!]!, $first: Int!, $orderBy: TopicSortingOption, $skip: Int, $query: String, $tags: [String!]) {
-              categoryTopicList(categories: $categories, orderBy: $orderBy, skip: $skip, query: $query, first: $first, tags: $tags) {
-                totalNum
-                edges {
-                  node {
+      query: `
+        query discussPostItems($orderBy: ArticleOrderByEnum, $keywords: [String]!, $tagSlugs: [String!], $skip: Int, $first: Int) {
+          ugcArticleDiscussionArticles(
+            orderBy: $orderBy
+            keywords: $keywords
+            tagSlugs: $tagSlugs
+            skip: $skip
+            first: $first
+          ) {
+            totalNum
+            edges {
+              node {
+                uuid
+                createdAt
+                topic {
                     id
-                    post {
-                        creationDate
-                    }
-                  }
                 }
-                __typename
               }
-            }`,
+            }
+          }
+        }`,
       variables: {
-        first: 1000,
-        skip: 0,
-        orderBy: 'newest_to_oldest',
-        query: '',
-        categories: ['compensation'],
-        tags: [],
+        "orderBy": "MOST_RECENT",
+        "keywords": [
+        ],
+        "tagSlugs": [
+          "compensation"
+        ],
+        "skip": 0,
+        "first": 1000
       },
     };
   }
@@ -42,11 +51,12 @@ const setPostId = async function (flag = 'recent') {
       .select('post_id')
       .sort({ post_id: -1 });
     const response = await axios.post(url, query(), { headers });
-    let list = response.data?.data?.categoryTopicList?.edges
+    let list = response.data?.data?.ugcArticleDiscussionArticles?.edges
       ?.map((e) => {
-        return { post_id: e?.node?.id, createdAt: e?.node?.post?.creationDate };
+        return { post_id: e?.node?.topic.id, createdAt: Math.floor(new Date(e?.node?.createdAt).getTime() / 1000) };
       })
       .filter((e) => parseInt(e.post_id) > parseInt(alreadyFetchedTill));
+
     await Promise.all(
       list.map(({ post_id, createdAt }) => {
         const post = new Post({
@@ -61,12 +71,13 @@ const setPostId = async function (flag = 'recent') {
       ({ post_id }) => post_id,
     );
     const response = await axios.post(url, query(), { headers });
-    let list = response.data?.data?.categoryTopicList?.edges
+    let list = response.data?.data?.ugcArticleDiscussionArticles?.edges
       ?.map((e) => {
-        return { post_id: e?.node?.id, createdAt: e?.node?.post?.creationDate };
+        return { post_id: e?.node?.topic.id, createdAt: Math.floor(new Date(e?.node?.createdAt).getTime() / 1000) };
       })
       .filter(
-        (e) => e.post_id !== '213414' && !alreadyFetched.includes(e.post_id),
+
+        (e) => e.post_id !== '213414' && !alreadyFetched.includes(e.post_id.toString()),
       );
     await Promise.all(
       list.map(({ post_id, createdAt }) => {
@@ -83,30 +94,32 @@ const setPostId = async function (flag = 'recent') {
 const setPostData = async function () {
   function query(postId) {
     return {
-      query: `query FetchTopicAndComments($topicId: Int!, $currentPage: Int!, $orderBy: String!) {
-                topic(id: $topicId) {
+      query: `
+        query discussPostDetail($topicId: ID!, $topicIdInt: Int!, $currentPage: Int, $orderBy: String!) {
+          ugcArticleDiscussionArticle(topicId: $topicId) {
+            uuid
+            content
+            createdAt
+            topic {
+              id
+              topLevelCommentCount
+            }
+          }
+          topicComments(topicId: $topicIdInt, pageNo: $currentPage, orderBy: $orderBy) {
+                data {
                     id
                     post {
-                        content
-                        creationDate
-                    }
-                }
-            
-                topicComments(topicId: $topicId, pageNo: $currentPage, orderBy: $orderBy) {
-                    data {
                         id
-                        post {
-                            id
-                            content
-                        }
+                        content
                     }
                 }
             }
-            `,
+        }`,
       variables: {
-        topicId: postId,
-        currentPage: 1,
-        orderBy: 'best',
+        "topicId": postId,
+        "currentPage": 1,
+        "orderBy": "best",
+        "topicIdInt": postId
       },
     };
   }
@@ -118,8 +131,8 @@ const setPostData = async function () {
     for (const { post_id } of data) {
       await sleep();
       axios.post(url, query(post_id), { headers }).then(async (response) => {
-        const post = response.data?.data?.topic?.post?.content;
-        const createdAt = response.data?.data?.topic?.post?.creationDate;
+        const post = response.data?.data?.ugcArticleDiscussionArticle?.content;
+        const createdAt = Math.floor(new Date(response.data?.data?.ugcArticleDiscussionArticle?.createdAt).getTime() / 1000);
         const comments = response.data?.data?.topicComments?.data
           ?.map((e) => e?.post?.content)
           .filter((e) => e);
